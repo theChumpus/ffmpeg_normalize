@@ -59,8 +59,9 @@ function normalize(analyzeOutput) {
       target_offset
     } = analyzeOutput
     const normStr = `loudnorm=I=-23:LRA=7:tp=-2:measured_I=${input_i}:measured_LRA=${input_lra}:measured_tp=${input_tp}:measured_thresh=${input_thresh}:offset=${target_offset}:linear=true`
-    const fileStr = basename(filename, extname(filename))
-    const args = ['-y', '-i', filename, '-af', normStr, '-vcodec', 'copy', '-acodec', 'aac', '-ar', '48k', '-b:a', '312k', `${fileStr}.norm.mp4`]
+    const ext = extname(filename)
+    const fileStr = basename(filename, ext)
+    const args = ['-i', filename, '-y', '-map_metadata', '-1', '-af', normStr, '-vcodec', 'copy', '-scodec', 'copy', '-acodec', 'aac', '-ar', '48k', '-b:a', '312k', `${fileStr}.norm${ext}`]
 
     console.log('ffmpeg', args.join(' '))
 
